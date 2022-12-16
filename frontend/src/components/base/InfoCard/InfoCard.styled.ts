@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { breakpoints } from '../../../styled-theme';
 
 export const InfoCardSection = styled.section`

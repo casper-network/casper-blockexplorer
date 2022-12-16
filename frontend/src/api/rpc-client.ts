@@ -18,6 +18,21 @@ export const DEFAULT_NUM_TO_SHOW = 10;
 
 const { webServerUrl } = loadConfig();
 
+export enum RpcApiError {
+  BlockMissing = 'getBlock/missing',
+  AccountMissing = 'getAccount/missing',
+  BlockByHeightMissing = 'getBlockByHeight/missing',
+  BlockFetchFailed = 'getBlock/fetch-failed',
+  AccountFetchFailed = 'getAccount/fetch-failed',
+  DeployFetchFailed = 'getDeploy/fetch-failed',
+  PeersFetchFailed = 'getPeers/fetch-failed',
+  BalanceFetchFailed = 'getBalance/fetch-failed',
+  CurrentBlockHeightFailed = 'getCurrentBlockHeight/fetch-failed',
+  BlockByHeightFailed = 'getBlockByHeight/fetch-failed',
+  GetBlocksFailed = 'getBlocks/fetch-failed',
+  GetStatusFailed = 'getStatus/fetch-failed',
+}
+
 export class RpcApi {
   constructor(
     private readonly rpcClient: CasperServiceByJsonRPC,
@@ -390,21 +405,6 @@ export class RpcApi {
       });
     }
   };
-}
-
-export enum RpcApiError {
-  BlockMissing = 'getBlock/missing',
-  AccountMissing = 'getAccount/missing',
-  BlockByHeightMissing = 'getBlockByHeight/missing',
-  BlockFetchFailed = 'getBlock/fetch-failed',
-  AccountFetchFailed = 'getAccount/fetch-failed',
-  DeployFetchFailed = 'getDeploy/fetch-failed',
-  PeersFetchFailed = 'getPeers/fetch-failed',
-  BalanceFetchFailed = 'getBalance/fetch-failed',
-  CurrentBlockHeightFailed = 'getCurrentBlockHeight/fetch-failed',
-  BlockByHeightFailed = 'getBlockByHeight/fetch-failed',
-  GetBlocksFailed = 'getBlocks/fetch-failed',
-  GetStatusFailed = 'getStatus/fetch-failed',
 }
 
 const casperJsonRpcService = new CasperServiceByJsonRPC(webServerUrl);

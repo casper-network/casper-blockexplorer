@@ -1,6 +1,6 @@
 import React from 'react';
 import useAsyncEffect from 'use-async-effect';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 
 import {
   BlocksInfo,

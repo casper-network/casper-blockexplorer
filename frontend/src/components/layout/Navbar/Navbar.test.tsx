@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { render } from '../../../test-utils';
 import { Navbar } from './Navbar';
 
@@ -12,9 +13,9 @@ jest.mock('../../../hooks', () => {
 
 describe('Navbar', () => {
   it('should render the Navbar component and contain nav items', () => {
-    const { getByTestId } = render(<Navbar />);
+    render(<Navbar />);
 
-    const nav = getByTestId('navigation');
+    const nav = screen.getByTestId('navigation');
 
     expect(nav).toBeInTheDocument();
     expect(nav).toHaveTextContent('Home');
@@ -23,10 +24,10 @@ describe('Navbar', () => {
   });
 
   it('should hide navigation text content when screen width is below 1023px', () => {
-    const { getByText } = render(<Navbar />);
-    const navItem1 = getByText('Home');
-    const navItem2 = getByText('Blocks');
-    const navItem3 = getByText('Peers');
+    render(<Navbar />);
+    const navItem1 = screen.getByText('Home');
+    const navItem2 = screen.getByText('Blocks');
+    const navItem3 = screen.getByText('Peers');
 
     expect(navItem1).not.toBeVisible();
     expect(navItem2).not.toBeVisible();

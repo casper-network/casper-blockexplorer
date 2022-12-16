@@ -1,5 +1,5 @@
 /**
- * This is not an actual styled-components theme
+ * This is not an actual styled-componentss theme
  * Emotion recommends that you only use an actual theme if you support multiple
  * https://emotion.sh/docs/best-practices#dont-use-a-theme-unless-your-app-supports-multiple-themes-or-will-eventually-support-multiple-themes
  */

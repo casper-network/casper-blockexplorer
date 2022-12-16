@@ -8,7 +8,7 @@ import {
   AccordionItemPanel,
   AccordionItemState,
 } from 'react-accessible-accordion';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { colors } from '../../../styled-theme';
 
 interface RawDataProps {

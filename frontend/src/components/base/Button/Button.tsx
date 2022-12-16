@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { pxToRem } from '../../../styled-theme';
 
 export type ButtonType = 'submit' | 'reset' | 'button';

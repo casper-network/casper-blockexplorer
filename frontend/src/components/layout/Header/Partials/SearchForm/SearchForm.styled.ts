@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { breakpoints } from 'src/styled-theme';
 
 export const FormContainer = styled.div`

@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import selectEvent from 'react-select-event';
 import { render } from '../../../../../test-utils';
 import { CustomSelect } from './CustomSelect';
@@ -24,9 +25,11 @@ describe('CustomSelect', () => {
   };
 
   it('should render customSelect with "Option 1" as default value', async () => {
-    const { getByRole, getByTestId } = render(<CustomSelect {...mockProps} />);
-    const customSelect = getByRole('combobox', { name: 'select-button' });
-    const selectWrapper = getByTestId('select-wrapper');
+    render(<CustomSelect {...mockProps} />);
+    const customSelect = screen.getByRole('combobox', {
+      name: 'select-button',
+    });
+    const selectWrapper = screen.getByTestId('select-wrapper');
 
     expect(customSelect).toBeInTheDocument();
     expect(mockDefaultValue.label).toEqual('Option 1');
@@ -34,30 +37,26 @@ describe('CustomSelect', () => {
   });
 
   it('should open menu on user click', async () => {
-    const { getByLabelText, queryByText, queryAllByText, getByText } = render(
-      <CustomSelect {...mockProps} />,
-    );
+    render(<CustomSelect {...mockProps} />);
 
-    const option1 = queryAllByText('Option 1');
+    const option1 = screen.queryAllByText('Option 1');
 
-    expect(queryByText('Option 2')).toBeNull();
+    expect(screen.queryByText('Option 2')).toBeNull();
 
-    selectEvent.openMenu(getByLabelText('Select'));
+    selectEvent.openMenu(screen.getByLabelText('Select'));
 
     expect(option1[0]).toBeInTheDocument();
     // 'Option 1' appears twice as the default option and first option
-    expect(getByText('Option 2')).toBeInTheDocument();
-    expect(getByText('Option 3')).toBeInTheDocument();
-    expect(getByText('Option 4')).toBeInTheDocument();
+    expect(screen.getByText('Option 2')).toBeInTheDocument();
+    expect(screen.getByText('Option 3')).toBeInTheDocument();
+    expect(screen.getByText('Option 4')).toBeInTheDocument();
   });
 
   it('should call onChange when an option is selected and display the selected option', async () => {
-    const { getByLabelText, getByTestId } = render(
-      <CustomSelect {...mockProps} />,
-    );
+    render(<CustomSelect {...mockProps} />);
 
-    const selectWrapper = getByTestId('select-wrapper');
-    const selectLabel = getByLabelText('Select');
+    const selectWrapper = screen.getByTestId('select-wrapper');
+    const selectLabel = screen.getByLabelText('Select');
 
     await selectEvent.select(selectLabel, 'Option 4');
 

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import Select, { PropsValue } from 'react-select';
 import { pxToRem, colors } from '../../../../../styled-theme';

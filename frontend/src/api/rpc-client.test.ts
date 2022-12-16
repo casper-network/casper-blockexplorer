@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable jest/no-conditional-expect */
 import { DeployStatus } from './types';
 import { formatDate } from '../utils';
 import { DEFAULT_NUM_TO_SHOW, RpcApi, RpcApiError } from './rpc-client';

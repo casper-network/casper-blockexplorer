@@ -34,7 +34,7 @@ frontend-install:
 	cd frontend && npm install
 
 frontend-audit:
-	cd frontend && npm audit
+	cd frontend && npm audit --production
 
 frontend-lint:
 	cd frontend && npm run lint

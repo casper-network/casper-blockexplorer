@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { colors, fontWeight } from '../../../styled-theme';
 
 export const DetailDataLabel = styled.h3`

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { GradientHeading } from '../../styled';
 import { breakpoints } from '../../../styled-theme';
 

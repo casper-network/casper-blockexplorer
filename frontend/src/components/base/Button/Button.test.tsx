@@ -1,24 +1,25 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { render } from '../../../test-utils';
 import { Button } from './Button';
 
 describe('Button', () => {
   it('should render a button', () => {
-    const { getByRole } = render(<Button type="button">button</Button>);
-    const button = getByRole('button', { name: 'button' });
+    render(<Button type="button">button</Button>);
+    const button = screen.getByRole('button', { name: 'button' });
 
     expect(button).toBeInTheDocument();
   });
 
   it('should call a clickHandler if not disabled', () => {
     const mockClickHandler = jest.fn();
-    const { getByRole } = render(
+    render(
       <Button type="button" onClick={mockClickHandler}>
         button
       </Button>,
     );
-    const button = getByRole('button', { name: 'button' });
+    const button = screen.getByRole('button', { name: 'button' });
 
     userEvent.click(button);
 
@@ -29,12 +30,12 @@ describe('Button', () => {
 
   it('should not call a clickHandler if it contains disabled prop', () => {
     const mockClickHandler = jest.fn();
-    const { getByRole } = render(
+    render(
       <Button type="button" onClick={mockClickHandler} isDisabled>
         button
       </Button>,
     );
-    const button = getByRole('button', { name: 'button' });
+    const button = screen.getByRole('button', { name: 'button' });
 
     userEvent.click(button);
 

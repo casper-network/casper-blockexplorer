@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, render } from '../../../test-utils';
 import { CopyToClipboard } from './CopyToClipboard';
@@ -9,27 +10,25 @@ Object.assign(navigator, {
   },
 });
 
-describe(CopyToClipboard, () => {
+describe('CopyToClipboard', () => {
   jest.spyOn(navigator.clipboard, 'writeText');
 
   it('should render the copy icon on first load', () => {
-    const { getByTestId } = render(<CopyToClipboard textToCopy="copy this" />);
+    render(<CopyToClipboard textToCopy="copy this" />);
 
-    const copyIcon = getByTestId('copy-icon');
+    const copyIcon = screen.getByTestId('copy-icon');
 
     expect(copyIcon).toBeInTheDocument();
   });
 
   it('should render copied icon after copy icon click', async () => {
-    const { getByTestId, findByTestId } = render(
-      <CopyToClipboard textToCopy="copy this" />,
-    );
+    render(<CopyToClipboard textToCopy="copy this" />);
 
-    const copyIcon = getByTestId('copy-icon');
+    const copyIcon = screen.getByTestId('copy-icon');
 
     fireEvent.click(copyIcon);
 
-    const copiedIcon = await findByTestId('copied-icon');
+    const copiedIcon = await screen.findByTestId('copied-icon');
 
     expect(copiedIcon).toBeInTheDocument();
   });
@@ -38,11 +37,9 @@ describe(CopyToClipboard, () => {
     jest.useFakeTimers();
     jest.spyOn(global, 'setTimeout');
 
-    const { getByTestId, findByTestId } = render(
-      <CopyToClipboard textToCopy="copy this" />,
-    );
+    render(<CopyToClipboard textToCopy="copy this" />);
 
-    const copyIcon = getByTestId('copy-icon');
+    const copyIcon = screen.getByTestId('copy-icon');
 
     fireEvent.click(copyIcon);
 
@@ -51,7 +48,7 @@ describe(CopyToClipboard, () => {
       jest.runAllTimers();
     });
 
-    const copyIconAfterClick = await findByTestId('copy-icon');
+    const copyIconAfterClick = await screen.findByTestId('copy-icon');
 
     expect(copyIconAfterClick).toBeInTheDocument();
   });

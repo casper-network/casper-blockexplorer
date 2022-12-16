@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
 import { render, renderHook } from '../../../../../test-utils';
 import { SearchSelect } from './SearchSelect';
@@ -16,7 +17,7 @@ describe('SearchSelect', () => {
   it('should render the SearchSelect component', () => {
     const { result } = renderHook(useForm<FormValues>);
     const mockCurrentFilterOption = 'current-option';
-    const { getByTestId } = render(
+    render(
       <SearchSelect
         control={result.current.control}
         currentFilterOption={mockCurrentFilterOption}
@@ -24,7 +25,7 @@ describe('SearchSelect', () => {
       />,
     );
 
-    const searchSelectWrapper = getByTestId('search-select');
+    const searchSelectWrapper = screen.getByTestId('search-select');
 
     expect(searchSelectWrapper).toBeInTheDocument();
   });
@@ -33,7 +34,7 @@ describe('SearchSelect', () => {
     const { result } = renderHook(useForm<FormValues>);
 
     const mockCurrentFilterOption = 'current option';
-    const { getByLabelText, queryByTestId } = render(
+    render(
       <SearchSelect
         control={result.current.control}
         currentFilterOption={mockCurrentFilterOption}
@@ -41,8 +42,8 @@ describe('SearchSelect', () => {
       />,
     );
 
-    const selectButton = getByLabelText('select-button');
-    const fourthButton = queryByTestId('button-4');
+    const selectButton = screen.getByLabelText('select-button');
+    const fourthButton = screen.queryByTestId('button-4');
 
     expect(selectButton).toBeInTheDocument();
     expect(fourthButton).not.toBeInTheDocument();

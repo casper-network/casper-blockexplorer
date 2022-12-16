@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { render } from '../../../test-utils';
 import { Table } from './Table';
 
@@ -64,9 +65,9 @@ const tableRows = [
 ];
 const footContent = <div>This is the foot content</div>;
 
-describe(Table, () => {
+describe('Table', () => {
   it('should render 5 table heads when given 5 head columns', () => {
-    const { getByTestId } = render(
+    render(
       <Table
         headContent={headContent}
         headColumns={tableHeads}
@@ -75,13 +76,13 @@ describe(Table, () => {
       />,
     );
 
-    const fifthTableHead = getByTestId('head-5');
+    const fifthTableHead = screen.getByTestId('head-5');
 
     expect(fifthTableHead).toBeInTheDocument();
   });
 
   it('should render 5 rows when given 5 rows', () => {
-    const { getByTestId } = render(
+    render(
       <Table
         headContent={headContent}
         headColumns={tableHeads}
@@ -90,13 +91,13 @@ describe(Table, () => {
       />,
     );
 
-    const fifthRow = getByTestId('row-5');
+    const fifthRow = screen.getByTestId('row-5');
 
     expect(fifthRow).toBeInTheDocument();
   });
 
   it('should render row column content', () => {
-    const { getByText } = render(
+    render(
       <Table
         headContent={headContent}
         headColumns={tableHeads}
@@ -105,13 +106,13 @@ describe(Table, () => {
       />,
     );
 
-    const thirdRowThirdColumnContent = getByText('Row 3 Col 3 Content');
+    const thirdRowThirdColumnContent = screen.getByText('Row 3 Col 3 Content');
 
     expect(thirdRowThirdColumnContent).toBeInTheDocument();
   });
 
   it('should render foot content when given foot content', () => {
-    const { getByText } = render(
+    render(
       <Table
         headContent={headContent}
         headColumns={tableHeads}
@@ -120,13 +121,13 @@ describe(Table, () => {
       />,
     );
 
-    const footContentByText = getByText('This is the foot content');
+    const footContentByText = screen.getByText('This is the foot content');
 
     expect(footContentByText).toBeInTheDocument();
   });
 
   it('should render head content', () => {
-    const { getByText } = render(
+    render(
       <Table
         headContent={headContent}
         headColumns={tableHeads}
@@ -135,7 +136,7 @@ describe(Table, () => {
       />,
     );
 
-    const headContentByText = getByText('This is the head content');
+    const headContentByText = screen.getByText('This is the head content');
 
     expect(headContentByText).toBeInTheDocument();
   });

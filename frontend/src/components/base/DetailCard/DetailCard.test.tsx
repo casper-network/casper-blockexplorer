@@ -1,4 +1,5 @@
 import React from 'react';
+import { screen } from '@testing-library/react';
 import { render } from '../../../test-utils';
 import { DetailCard } from './DetailCard';
 
@@ -10,27 +11,27 @@ const mockRows = [
   { key: 5, detailKey: 'Detail Key 5', value: 'Value 5' },
 ];
 
-describe(DetailCard, () => {
+describe('DetailCard', () => {
   it('should render 5 rows if given 5 rows', () => {
-    const { getByTestId } = render(<DetailCard rows={mockRows} />);
+    render(<DetailCard rows={mockRows} />);
 
-    const fifthRow = getByTestId(5);
+    const fifthRow = screen.getByTestId(5);
 
     expect(fifthRow).toBeInTheDocument();
   });
 
   it('should render detail key content', () => {
-    const { getByText } = render(<DetailCard rows={mockRows} />);
+    render(<DetailCard rows={mockRows} />);
 
-    const detailKeyFive = getByText('Detail Key 5');
+    const detailKeyFive = screen.getByText('Detail Key 5');
 
     expect(detailKeyFive).toBeInTheDocument();
   });
 
   it('should render row value content', () => {
-    const { getByText } = render(<DetailCard rows={mockRows} />);
+    render(<DetailCard rows={mockRows} />);
 
-    const valueFive = getByText('Value 5');
+    const valueFive = screen.getByText('Value 5');
 
     expect(valueFive).toBeInTheDocument();
   });

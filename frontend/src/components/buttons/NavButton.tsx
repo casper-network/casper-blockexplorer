@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from 'styled-components';
 import { breakpoints } from '../../styled-theme';
 import { Button } from '../base';
 import { ButtonProps } from '../base/Button/Button';
