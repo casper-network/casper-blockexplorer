@@ -3,76 +3,95 @@ import { screen } from '@testing-library/react';
 import { render } from '../../../test-utils';
 import { Table } from './Table';
 
-const headContent = <div>This is the head content</div>;
-const tableHeads = [
-  { title: 'Title 1', key: 1 },
-  { title: 'Title 2', key: 2 },
-  { title: 'Title 3', key: 3 },
-  { title: 'Title 4', key: 4 },
-  { title: 'Title 5', key: 5 },
+const header = <div>This is the head content</div>;
+const columns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: 'First Name',
+        accessor: 'firstName',
+      },
+      {
+        Header: 'Last Name',
+        accessor: 'lastName',
+      },
+    ],
+  },
+  {
+    Header: 'Info',
+    columns: [
+      {
+        Header: 'Age',
+        accessor: 'age',
+      },
+      {
+        Header: 'Visits',
+        accessor: 'visits',
+      },
+      {
+        Header: 'Status',
+        accessor: 'status',
+      },
+      {
+        Header: 'Profile Progress',
+        accessor: 'progress',
+      },
+    ],
+  },
 ];
 const tableRows = [
   {
-    items: [
-      { content: 'Row 1 Col 1 Content', key: 1 },
-      { content: 'Row 1 Col 2 Content', key: 2 },
-      { content: 'Row 1 Col 3 Content', key: 3 },
-      { content: 'Row 1 Col 4 Content', key: 4 },
-      { content: 'Row 1 Col 5 Content', key: 5 },
-    ],
-    key: 1,
+    firstName: 'republic',
+    lastName: 'furniture',
+    age: 24,
+    visits: 53,
+    progress: 92,
+    status: 'single',
   },
   {
-    items: [
-      { content: 'Row 2 Col 1 Content', key: 1 },
-      { content: 'Row 2 Col 2 Content', key: 2 },
-      { content: 'Row 2 Col 3 Content', key: 3 },
-      { content: 'Row 2 Col 4 Content', key: 4 },
-      { content: 'Row 2 Col 5 Content', key: 5 },
-    ],
-    key: 2,
+    firstName: 'chance',
+    lastName: 'fly',
+    age: 13,
+    visits: 86,
+    progress: 76,
+    status: 'complicated',
   },
   {
-    items: [
-      { content: 'Row 3 Col 1 Content', key: 1 },
-      { content: 'Row 3 Col 2 Content', key: 2 },
-      { content: 'Row 3 Col 3 Content', key: 3 },
-      { content: 'Row 3 Col 4 Content', key: 4 },
-      { content: 'Row 3 Col 5 Content', key: 5 },
-    ],
-    key: 3,
+    firstName: 'purpose',
+    lastName: 'religion',
+    age: 6,
+    visits: 15,
+    progress: 26,
+    status: 'complicated',
   },
   {
-    items: [
-      { content: 'Row 4 Col 1 Content', key: 1 },
-      { content: 'Row 4 Col 2 Content', key: 2 },
-      { content: 'Row 4 Col 3 Content', key: 3 },
-      { content: 'Row 4 Col 4 Content', key: 4 },
-      { content: 'Row 4 Col 5 Content', key: 5 },
-    ],
-    key: 4,
+    firstName: 'oven',
+    lastName: 'library',
+    age: 21,
+    visits: 86,
+    progress: 82,
+    status: 'relationship',
   },
   {
-    items: [
-      { content: 'Row 5 Col 1 Content', key: 1 },
-      { content: 'Row 5 Col 2 Content', key: 2 },
-      { content: 'Row 5 Col 3 Content', key: 3 },
-      { content: 'Row 5 Col 4 Content', key: 4 },
-      { content: 'Row 5 Col 5 Content', key: 5 },
-    ],
-    key: 5,
+    firstName: 'expansion',
+    lastName: 'dog',
+    age: 18,
+    visits: 69,
+    progress: 37,
+    status: 'relationship',
   },
 ];
-const footContent = <div>This is the foot content</div>;
+const footer = <div>This is the foot content</div>;
 
 describe('Table', () => {
   it('should render 5 table heads when given 5 head columns', () => {
     render(
       <Table
-        headContent={headContent}
-        headColumns={tableHeads}
-        rows={tableRows}
-        footContent={footContent}
+        header={header}
+        columns={columns}
+        data={tableRows}
+        footer={footer}
       />,
     );
 
@@ -84,10 +103,10 @@ describe('Table', () => {
   it('should render 5 rows when given 5 rows', () => {
     render(
       <Table
-        headContent={headContent}
-        headColumns={tableHeads}
-        rows={tableRows}
-        footContent={footContent}
+        header={header}
+        columns={columns}
+        data={tableRows}
+        footer={footer}
       />,
     );
 
@@ -99,10 +118,10 @@ describe('Table', () => {
   it('should render row column content', () => {
     render(
       <Table
-        headContent={headContent}
-        headColumns={tableHeads}
-        rows={tableRows}
-        footContent={footContent}
+        header={header}
+        columns={columns}
+        data={tableRows}
+        footer={footer}
       />,
     );
 
@@ -114,30 +133,30 @@ describe('Table', () => {
   it('should render foot content when given foot content', () => {
     render(
       <Table
-        headContent={headContent}
-        headColumns={tableHeads}
-        rows={tableRows}
-        footContent={footContent}
+        header={header}
+        columns={columns}
+        data={tableRows}
+        footer={footer}
       />,
     );
 
-    const footContentByText = screen.getByText('This is the foot content');
+    const footerByText = screen.getByText('This is the foot content');
 
-    expect(footContentByText).toBeInTheDocument();
+    expect(footerByText).toBeInTheDocument();
   });
 
   it('should render head content', () => {
     render(
       <Table
-        headContent={headContent}
-        headColumns={tableHeads}
-        rows={tableRows}
-        footContent={footContent}
+        header={header}
+        columns={columns}
+        data={tableRows}
+        footer={footer}
       />,
     );
 
-    const headContentByText = screen.getByText('This is the head content');
+    const headerByText = screen.getByText('This is the head content');
 
-    expect(headContentByText).toBeInTheDocument();
+    expect(headerByText).toBeInTheDocument();
   });
 });

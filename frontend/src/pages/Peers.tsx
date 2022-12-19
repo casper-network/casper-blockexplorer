@@ -29,7 +29,7 @@ export const Peers: React.FC = () => {
   return (
     <PageWrapper isLoading={isLoading}>
       <GradientHeading type="h2">Connected Peers</GradientHeading>
-      <PeerTable peers={peers} />
+      {/* <PeerTable peers={peers} /> */}
     </PageWrapper>
   );
 };

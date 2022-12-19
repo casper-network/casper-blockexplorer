@@ -1,1 +1,0 @@
-export { LatestBlocks } from './LatestBlocks';

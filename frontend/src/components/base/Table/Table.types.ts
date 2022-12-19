@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Column } from 'react-table';
 export interface TableHeadColumn {
   readonly title: React.ReactNode;
   readonly key: React.Key;
@@ -16,8 +16,8 @@ export interface TableRow {
 }
 
 export interface TableProps {
-  readonly headContent: React.ReactNode;
-  readonly headColumns: TableHeadColumn[];
-  readonly rows: TableRow[];
-  readonly footContent?: React.ReactNode;
+  readonly header?: React.ReactNode;
+  readonly columns: Column[];
+  readonly data: any[];
+  readonly footer?: React.ReactNode;
 }
