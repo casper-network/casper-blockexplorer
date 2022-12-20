@@ -2,45 +2,73 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { render } from '../../../test-utils';
 import { Table } from './Table';
+import { ColumnDef } from '@tanstack/react-table';
 
 const header = <div>This is the head content</div>;
-const columns = [
+
+type Person = {
+  firstName: string;
+  lastName: string;
+  age: number;
+  visits: number;
+  progress: number;
+  status: 'relationship' | 'complicated' | 'single';
+  subRows?: Person[];
+};
+
+const columns: ColumnDef<Person>[] = [
   {
-    Header: 'Name',
+    header: 'Name',
+    footer: props => props.column.id,
     columns: [
       {
-        Header: 'First Name',
-        accessor: 'firstName',
+        accessorKey: 'firstName',
+        cell: info => info.getValue(),
+        footer: props => props.column.id,
       },
       {
-        Header: 'Last Name',
-        accessor: 'lastName',
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+        header: () => <span>Last Name</span>,
+        footer: props => props.column.id,
       },
     ],
   },
   {
-    Header: 'Info',
+    header: 'Info',
+    footer: props => props.column.id,
     columns: [
       {
-        Header: 'Age',
-        accessor: 'age',
+        accessorKey: 'age',
+        header: () => 'Age',
+        footer: props => props.column.id,
       },
       {
-        Header: 'Visits',
-        accessor: 'visits',
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-      },
-      {
-        Header: 'Profile Progress',
-        accessor: 'progress',
+        header: 'More Info',
+        columns: [
+          {
+            accessorKey: 'visits',
+            header: () => <span>Visits</span>,
+            footer: props => props.column.id,
+          },
+          {
+            accessorKey: 'status',
+            header: 'Status',
+            footer: props => props.column.id,
+          },
+          {
+            accessorKey: 'progress',
+            header: 'Profile Progress',
+            footer: props => props.column.id,
+          },
+        ],
       },
     ],
   },
 ];
-const tableRows = [
+
+const tableRows: Person[] = [
   {
     firstName: 'republic',
     lastName: 'furniture',
@@ -82,12 +110,13 @@ const tableRows = [
     status: 'relationship',
   },
 ];
+
 const footer = <div>This is the foot content</div>;
 
 describe('Table', () => {
   it('should render 5 table heads when given 5 head columns', () => {
     render(
-      <Table
+      <Table<Person>
         header={header}
         columns={columns}
         data={tableRows}
@@ -95,14 +124,14 @@ describe('Table', () => {
       />,
     );
 
-    const fifthTableHead = screen.getByTestId('head-5');
+    const fifthTableHead = screen.getByText('Profile Progress');
 
     expect(fifthTableHead).toBeInTheDocument();
   });
 
   it('should render 5 rows when given 5 rows', () => {
     render(
-      <Table
+      <Table<Person>
         header={header}
         columns={columns}
         data={tableRows}
@@ -110,14 +139,14 @@ describe('Table', () => {
       />,
     );
 
-    const fifthRow = screen.getByTestId('row-5');
+    const fifthRow = screen.getByText('expansion');
 
     expect(fifthRow).toBeInTheDocument();
   });
 
   it('should render row column content', () => {
     render(
-      <Table
+      <Table<Person>
         header={header}
         columns={columns}
         data={tableRows}
@@ -125,14 +154,14 @@ describe('Table', () => {
       />,
     );
 
-    const thirdRowThirdColumnContent = screen.getByText('Row 3 Col 3 Content');
+    const thirdRowSecondColumnContent = screen.getByText('religion');
 
-    expect(thirdRowThirdColumnContent).toBeInTheDocument();
+    expect(thirdRowSecondColumnContent).toBeInTheDocument();
   });
 
   it('should render foot content when given foot content', () => {
     render(
-      <Table
+      <Table<Person>
         header={header}
         columns={columns}
         data={tableRows}
@@ -147,7 +176,7 @@ describe('Table', () => {
 
   it('should render head content', () => {
     render(
-      <Table
+      <Table<Person>
         header={header}
         columns={columns}
         data={tableRows}

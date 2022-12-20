@@ -1,3 +1,4 @@
+import { ColumnDef } from '@tanstack/react-table';
 import React, { useMemo } from 'react';
 import { Peer } from '../../../api';
 import { Table } from '../../base';
@@ -7,15 +8,17 @@ interface PeerTableProps {
 }
 
 export const PeerTable: React.FC<PeerTableProps> = ({ peers }) => {
-  const columns = useMemo(
+  const columns = useMemo<ColumnDef<Peer>[]>(
     () => [
       {
-        Header: 'Node Id',
-        accessor: 'id',
+        header: 'Node Id',
+        accessorKey: 'id',
+        enableSorting: false,
       },
       {
-        Header: 'Address',
-        accessor: 'address',
+        header: 'Address',
+        accessorKey: 'address',
+        enableSorting: false,
       },
     ],
     [],
@@ -31,5 +34,5 @@ export const PeerTable: React.FC<PeerTableProps> = ({ peers }) => {
     [peers.length],
   );
 
-  return <Table header={header} columns={columns} data={peers} />;
+  return <Table<Peer> header={header} columns={columns} data={peers} />;
 };

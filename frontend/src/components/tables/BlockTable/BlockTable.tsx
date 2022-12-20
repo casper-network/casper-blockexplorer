@@ -15,6 +15,7 @@ import { formatTimeAgo, standardizeNumber, truncateHash } from '../../../utils';
 import { CopyToClipboard, Loader, RefreshTimer } from '../../utility';
 
 import { Table } from '../../base';
+import { ColumnDef } from '@tanstack/react-table';
 
 interface BlockTableProps {
   readonly blocks: Block[];
@@ -62,59 +63,59 @@ export const BlockTable: React.FC<BlockTableProps> = ({
     [dispatch, earliestLoadedBlockHeight, isLoadingMoreBlocks],
   );
 
-  const columns = useMemo(
+  const columns = useMemo<ColumnDef<Block>[]>(
     () => [
       {
-        Header: 'Block Height',
-        accessor: 'height',
-        Cell: ({ value }: { value: number }) => <>{standardizeNumber(value)}</>,
+        header: 'Block Height',
+        accessorKey: 'height',
+        cell: ({ getValue }) => <>{standardizeNumber(getValue<number>())}</>,
       },
       {
-        Header: 'Era',
-        accessor: 'eraID',
+        header: 'Era',
+        accessorKey: 'eraID',
       },
       {
-        Header: 'Deploy',
-        accessor: 'deployCount',
+        header: 'Deploy',
+        accessorKey: 'deployCount',
       },
       {
-        Header: 'Age',
-        accessor: 'timestamp',
-        Cell: ({ value }: { value: number }) => (
-          <>{formatTimeAgo(new Date(value))}</>
+        header: 'Age',
+        accessorKey: 'timestamp',
+        cell: ({ getValue }) => (
+          <>{formatTimeAgo(new Date(getValue<number>()))}</>
         ),
       },
       {
-        Header: 'Block Hash',
-        accessor: 'hash',
-        Cell: ({ value }: { value: string }) => (
+        header: 'Block Hash',
+        accessorKey: 'hash',
+        cell: ({ getValue }) => (
           <div className="flex flex-row items-center">
             <Link
               to={{
-                pathname: `/block/${value}`,
+                pathname: `/block/${getValue<string>()}`,
               }}>
-              {truncateHash(value)}
+              {truncateHash(getValue<string>())}
             </Link>
-            <CopyToClipboard textToCopy={value} />
+            <CopyToClipboard textToCopy={getValue<string>()} />
           </div>
         ),
-        disableSortBy: true,
+        enableSorting: false,
       },
       {
-        Header: 'Validator',
-        accessor: 'validatorPublicKey',
-        Cell: ({ value }: { value: string }) => (
+        header: 'Validator',
+        accessorKey: 'validatorPublicKey',
+        cell: ({ getValue }) => (
           <div className="flex flex-row items-center">
             <Link
               to={{
-                pathname: `/account/${value}`,
+                pathname: `/account/${getValue<string>()}`,
               }}>
-              {truncateHash(value)}
+              {truncateHash(getValue<string>())}
             </Link>
-            <CopyToClipboard textToCopy={value} />
+            <CopyToClipboard textToCopy={getValue<string>()} />
           </div>
         ),
-        disableSortBy: true,
+        enableSorting: false,
         isVisible: showValidators,
       },
     ],
@@ -122,6 +123,11 @@ export const BlockTable: React.FC<BlockTableProps> = ({
   );
 
   return (
-    <Table header={header} columns={columns} data={blocks} footer={footer} />
+    <Table<Block>
+      header={header}
+      columns={columns}
+      data={blocks}
+      footer={footer}
+    />
   );
 };
