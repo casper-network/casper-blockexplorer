@@ -20,11 +20,14 @@ import {
   fetchStatus,
   setIsFirstVisit,
 } from './store';
+import { useAppRefresh } from './hooks';
 
 const App = () => {
   const [ref, bounds] = useMeasure();
 
   const dispatch = useAppDispatch();
+
+  useAppRefresh();
 
   useEffect(() => {
     dispatch(updateBounds(bounds));

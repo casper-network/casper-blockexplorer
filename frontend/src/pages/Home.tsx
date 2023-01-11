@@ -1,7 +1,9 @@
 import React from 'react';
 import useAsyncEffect from 'use-async-effect';
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
 
+import { casperApi } from '../api';
 import {
   BlocksInfo,
   DeploysInfo,
@@ -22,6 +24,7 @@ import {
   fetchPeers,
 } from '../store';
 import { breakpoints, pxToRem } from '../styled-theme';
+import { standardizeNumber } from '../utils';
 
 export const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -34,7 +37,11 @@ export const Home: React.FC = () => {
 
   const blocksAreLoading = blockLoadingStatus !== Loading.Complete;
   const peersAreLoading = peerLoadingStatus !== Loading.Complete;
-  const isLoading = blocksAreLoading || peersAreLoading;
+  const { data: validators, isLoading: validtorIsLoading } = useQuery(
+    ['validators'],
+    () => casperApi.getValidators(),
+  );
+  const isLoading = blocksAreLoading || peersAreLoading || validtorIsLoading;
 
   const firstListedBlockHeight = !blocksAreLoading
     ? blocks[0].height.toLocaleString()
@@ -47,8 +54,6 @@ export const Home: React.FC = () => {
     : 'n/a';
 
   const currentPeers = !peersAreLoading ? peers.length.toLocaleString() : 'n/a';
-
-  const currentValidators = 'n/a';
 
   useAsyncEffect(async () => {
     if (blockLoadingStatus === Loading.Idle) {
@@ -70,7 +75,7 @@ export const Home: React.FC = () => {
         <DeploysInfo />
         <PeersValidatorsInfo
           currentPeers={currentPeers}
-          currentValidators={currentValidators}
+          currentValidators={standardizeNumber(validators?.length || 0)}
         />
       </HomeContentContainer>
     </PageWrapper>

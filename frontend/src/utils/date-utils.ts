@@ -6,7 +6,7 @@ TimeAgo.addDefaultLocale(en);
 
 const timeAgo = new TimeAgo('en-US');
 
-export const defaultDateFormat = 'MMM do yyyy, h:mm:ss aaaa';
+export const defaultDateFormat = 'MMM do yyyy, h:mm:ss a';
 
 export const formatDate = (date: Date) => {
   const readableTimestamp = format(date, defaultDateFormat);

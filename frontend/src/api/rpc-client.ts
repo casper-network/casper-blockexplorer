@@ -112,12 +112,26 @@ export class RpcApi {
     }
   };
 
+  async getValidators() {
+    const latestBlock = await this.rpcClient.getLatestBlockInfo();
+    const latestEraId = latestBlock.block?.header.era_id;
+
+    const validtorsInfo = await this.rpcClient.getValidatorsInfo();
+
+    const currentValidators = validtorsInfo.auction_state.era_validators.find(
+      ({ era_id }) => era_id === latestEraId,
+    );
+
+    return currentValidators?.validator_weights;
+  }
+
   getDeploy: (deployHash: string) => Promise<Deploy | undefined> =
     async deployHash => {
       try {
         const { deploy, execution_results: executionResults } =
           await this.rpcClient.getDeployInfo(deployHash);
 
+        // @ts-ignore
         const paymentMap = new Map(deploy.payment.ModuleBytes?.args);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
